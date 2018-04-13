@@ -1,5 +1,8 @@
 const express = require('express');
 const app = express();
+const cheerio = require('cheerio');
+const request = require('request');
+
 var port = process.env.PORT || 3000;
 
 app.get('/',(req,res) => {
@@ -10,14 +13,12 @@ app.get('/scrape', function name(req, res) {
     let url = 'https://housing.com/in/buy/search?f=eyJiYXNlIjpbeyJ0eXBlIjoiUE9MWSIsInV1aWQiOiIzOTkzZjkwYjViYzkwZGM4YzdkYiIsImxhYmVsIjoiSi4gUC4gTmFnYXIifSx7InR5cGUiOiJQT0xZIiwidXVpZCI6ImEyNzNjNGMzYmUwZWU4YjM2NjlmIiwibGFiZWwiOiJXaGl0ZWZpZWxkIn0seyJ0eXBlIjoiUE9MWSIsInV1aWQiOiIwMTM2ZGU5YzEyYzA1ZmM2YTdhOSIsImxhYmVsIjoiRWxlY3Ryb25pYyBDaXR5In1dLCJ2IjoyLCJzIjoiZCJ9';
     // The structure of our request call
     // The first parameter is our URL
-    // The callback function takes 3 parameters, an error, response status code and the html
-    const request = require('request');
+    // The callback function takes 3 parameters, an error, response status code and the html    
     request(url, function (error, response, html) {
         // First we'll check to make sure no errors occurred when making the request
         let listing = [];
         if (!error) {
-            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-            const cheerio = require('cheerio');
+            // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality            
             var $ = cheerio.load(html);
             for (let index = 0; index < 
                 $('.infinite-loader>.infi-item-wrapper>.list-item-container>.list-card-item').length; index++) {
