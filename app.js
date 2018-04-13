@@ -9,6 +9,23 @@ app.get('/',(req,res) => {
     res.send('Hello World!!!');
 });
 
+app.get('/gerPropertiesData', (req, response) => {
+    var mongoDBurl = "mongodb://eypropertysearch:AqswvaIrS4cNeY9OV5XJtD9WGwcBmn2vUXSXFKc6otj27kAGnXREGsznJZ9G0tzkp1bB1oZzitpqJZHXDhn5IA%3D%3D@eypropertysearch.documents.azure.com:10255/?ssl=true";
+    var mongoClient = require("mongodb").MongoClient;
+    var databaseName = 'OnlineProperty';
+    let result;
+    mongoClient.connect(mongoDBurl, function (err, client) {
+        if (err) throw err;
+        var db = client.db(databaseName);
+        db.collection("Property").find({}).toArray(function(err, result)
+        {
+            if (err) throw err;   
+            response.send(result);
+        });        
+    client.close();
+    });
+});
+
 app.get('/scrape', function name(req, res) {
     let url = 'https://housing.com/in/buy/search?f=eyJiYXNlIjpbeyJ0eXBlIjoiUE9MWSIsInV1aWQiOiIzOTkzZjkwYjViYzkwZGM4YzdkYiIsImxhYmVsIjoiSi4gUC4gTmFnYXIifSx7InR5cGUiOiJQT0xZIiwidXVpZCI6ImEyNzNjNGMzYmUwZWU4YjM2NjlmIiwibGFiZWwiOiJXaGl0ZWZpZWxkIn0seyJ0eXBlIjoiUE9MWSIsInV1aWQiOiIwMTM2ZGU5YzEyYzA1ZmM2YTdhOSIsImxhYmVsIjoiRWxlY3Ryb25pYyBDaXR5In1dLCJ2IjoyLCJzIjoiZCJ9';
     // The structure of our request call
