@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const cheerio = require('cheerio');
 const request = require('request');
-const url = require('url');
+//const url = require('url');
 
 var port = process.env.PORT || 3000;
 
