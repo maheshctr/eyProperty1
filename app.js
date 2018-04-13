@@ -18,19 +18,17 @@ app.get('/gerPropertiesData', (req, response) => {
     let result;
     var name = req.query.name;
     console.log(name);
-    if(name)
+    var param = "{}";
+    if(name && name != "")
     {
-        //name = "^/" + name + "/";
+        param = {"propName":name};
     }
-    else
-    {
-        name = "$all";
-    }
-    console.log(name);
+    
+    console.log(name); 
     mongoClient.connect(mongoDBurl, function (err, client) {
         if (err) throw err;
         var db = client.db(databaseName);
-        db.collection("Property").find({"propName":name}).toArray(function(err, result)
+        db.collection("Property").find(param).toArray(function(err, result)
         {
             if (err) throw err;   
             response.send(result);
