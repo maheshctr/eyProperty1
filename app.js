@@ -2,22 +2,35 @@ const express = require('express');
 const app = express();
 const cheerio = require('cheerio');
 const request = require('request');
+const url = require('url');
 
 var port = process.env.PORT || 3000;
 
 app.get('/',(req,res) => {
-    res.send('Hello World!!!');
+    res.send('EY Property App!!!');
 });
 
 app.get('/gerPropertiesData', (req, response) => {
+
     var mongoDBurl = "mongodb://eypropertysearch:AqswvaIrS4cNeY9OV5XJtD9WGwcBmn2vUXSXFKc6otj27kAGnXREGsznJZ9G0tzkp1bB1oZzitpqJZHXDhn5IA%3D%3D@eypropertysearch.documents.azure.com:10255/?ssl=true";
     var mongoClient = require("mongodb").MongoClient;
     var databaseName = 'OnlineProperty';
     let result;
+    var name = req.query.name;
+    console.log(name);
+    if(name)
+    {
+        //name = "^/" + name + "/";
+    }
+    else
+    {
+        name = "$all";
+    }
+    console.log(name);
     mongoClient.connect(mongoDBurl, function (err, client) {
         if (err) throw err;
         var db = client.db(databaseName);
-        db.collection("Property").find({}).toArray(function(err, result)
+        db.collection("Property").find({"propName":name}).toArray(function(err, result)
         {
             if (err) throw err;   
             response.send(result);
