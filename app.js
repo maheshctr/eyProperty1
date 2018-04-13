@@ -10,7 +10,7 @@ app.get('/',(req,res) => {
     res.send('EY Property App!!!');
 });
 
-app.get('/gerPropertiesData', (req, response) => {
+app.get('/getPropertiesData', (req, response) => {
 
     var mongoDBurl = "mongodb://eypropertysearch:AqswvaIrS4cNeY9OV5XJtD9WGwcBmn2vUXSXFKc6otj27kAGnXREGsznJZ9G0tzkp1bB1oZzitpqJZHXDhn5IA%3D%3D@eypropertysearch.documents.azure.com:10255/?ssl=true";
     var mongoClient = require("mongodb").MongoClient;
